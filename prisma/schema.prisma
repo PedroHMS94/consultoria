@@ -1,0 +1,123 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/controle_vendas_consultoria/nextjs_space/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model PlanType {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  color     String    @default("#3B82F6")
+  order     Int       @default(0)
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  students  Student[]
+}
+
+model TrainingPhase {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  color     String    @default("#10B981")
+  order     Int       @default(0)
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  students  Student[]
+}
+
+model Student {
+  id                     String         @id @default(cuid())
+  name                   String
+  email                  String?
+  planTypeId             String
+  planStartDate          DateTime
+  planExpiryDate         DateTime
+  trainingStartDate      DateTime?
+  trainingExpiryDate     DateTime?
+  trainingPhaseId        String?
+  trainingStatus         String         @default("Não Iniciado") // Completado, Em Andamento, Não Iniciado
+  paymentStatus          String         @default("Pendente") // Pago, Pendente, Vencido
+  paymentMethod          String?        // Cartão de Crédito, Boleto Bancário, PIX, etc.
+  paymentDate            DateTime?
+  discount               Float          @default(0)
+  discountType           String         @default("valor") // valor ou percentual
+  trainingAccessId       String?        @unique
+  observations           String?
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  planType               PlanType       @relation(fields: [planTypeId], references: [id])
+  trainingPhase          TrainingPhase? @relation(fields: [trainingPhaseId], references: [id])
+  paymentHistory         PaymentHistory[]
+
+  @@index([name])
+  @@index([email])
+  @@index([paymentStatus])
+  @@index([planExpiryDate])
+}
+
+model PaymentHistory {
+  id            String   @id @default(cuid())
+  studentId     String
+  amount        Float
+  paymentMethod String
+  paymentDate   DateTime
+  description   String?
+  createdAt     DateTime @default(now())
+  student       Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([paymentDate])
+}
