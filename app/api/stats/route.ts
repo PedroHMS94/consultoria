@@ -30,9 +30,12 @@ export async function GET() {
 	const overdueCount = students.filter((s: any) => s.paymentStatus === 'Vencido').length;
 
     // Training status stats
-    const completedCount = students.filter(s => s.trainingStatus === 'Completado').length;
-    const inProgressCount = students.filter(s => s.trainingStatus === 'Em Andamento').length;
-    const notStartedCount = students.filter(s => s.trainingStatus === 'Não Iniciado').length;
+    //const completedCount = students.filter(s => s.trainingStatus === 'Completado').length;
+    //const inProgressCount = students.filter(s => s.trainingStatus === 'Em Andamento').length;
+    //const notStartedCount = students.filter(s => s.trainingStatus === 'Não Iniciado').length;
+	const completedCount = students.filter((s: any) => s.trainingStatus === 'Completado').length;
+const inProgressCount = students.filter((s: any) => s.trainingStatus === 'Em Andamento').length;
+const notStartedCount = students.filter((s: any) => s.trainingStatus === 'Não Iniciado').length;
 
     // Plan expiry alerts
     const now = new Date();
