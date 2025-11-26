@@ -46,7 +46,7 @@ export async function GET(request: Request) {
       },
     });
 
-    const csvData = students.map((student) => ({
+    const csvData = students.map((student: any) => ({
       nome: student?.name,
       email: student?.email || '',
       plano: student?.planType?.name,
