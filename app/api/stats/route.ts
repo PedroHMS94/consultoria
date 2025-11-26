@@ -22,9 +22,12 @@ export async function GET() {
     const totalStudents = students.length;
     
     // Payment stats
-    const paidCount = students.filter(s => s.paymentStatus === 'Pago').length;
-    const pendingCount = students.filter(s => s.paymentStatus === 'Pendente').length;
-    const overdueCount = students.filter(s => s.paymentStatus === 'Vencido').length;
+    //const paidCount = students.filter(s => s.paymentStatus === 'Pago').length;
+    //const pendingCount = students.filter(s => s.paymentStatus === 'Pendente').length;
+    //const overdueCount = students.filter(s => s.paymentStatus === 'Vencido').length;
+	const paidCount = students.filter((s: any) => s.paymentStatus === 'Pago').length;
+	const pendingCount = students.filter((s: any) => s.paymentStatus === 'Pendente').length;
+	const overdueCount = students.filter((s: any) => s.paymentStatus === 'Vencido').length;
 
     // Training status stats
     const completedCount = students.filter(s => s.trainingStatus === 'Completado').length;
