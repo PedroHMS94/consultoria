@@ -90,7 +90,7 @@ model Student {
   trainingPhaseId        String?
   trainingStatus         String         @default("Não Iniciado") // Completado, Em Andamento, Não Iniciado
   paymentStatus          String         @default("Pendente") // Pago, Pendente, Vencido
-  paymentMethod          String?        // Cartão de Crédito, Boleto Bancário, PIX, etc.
+  paymentMethod          String?        // Cartão de Crédito, Boleto Bancário, PIX, etc .
   paymentDate            DateTime?
   discount               Float          @default(0)
   discountType           String         @default("valor") // valor ou percentual
