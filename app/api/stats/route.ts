@@ -39,7 +39,7 @@ const notStartedCount = students.filter((s: any) => s.trainingStatus === 'Não I
 
     // Plan expiry alerts
     const now = new Date();
-    const expiringSoon = students.filter(s => {
+    const expiringSoon = students.filter((s: any) => {
       const diff = s.planExpiryDate.getTime() - now.getTime();
       const days = diff / (1000 * 60 * 60 * 24);
       return days > 0 && days <= 30;
