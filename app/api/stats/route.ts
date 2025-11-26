@@ -45,13 +45,13 @@ const notStartedCount = students.filter((s: any) => s.trainingStatus === 'Não I
       return days > 0 && days <= 30;
     });
 
-    const expiringCritical = expiringSoon.filter(s => {
+    const expiringCritical = expiringSoon.filter((s: any) => {
       const diff = s.planExpiryDate.getTime() - now.getTime();
       const days = diff / (1000 * 60 * 60 * 24);
       return days <= 7;
     });
 
-    const expiringWarning = expiringSoon.filter(s => {
+    const expiringWarning = expiringSoon.filter((s: any) => {
       const diff = s.planExpiryDate.getTime() - now.getTime();
       const days = diff / (1000 * 60 * 60 * 24);
       return days > 7 && days <= 15;
