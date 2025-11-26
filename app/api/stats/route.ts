@@ -58,7 +58,7 @@ const notStartedCount = students.filter((s: any) => s.trainingStatus === 'Não I
     });
 
     // Plan distribution
-    const planDistribution = students.reduce((acc: any, student) => {
+    const planDistribution = students.reduce((acc: any, student: any) => {
       const planName = student?.planType?.name;
       if (planName) {
         acc[planName] = (acc[planName] || 0) + 1;
@@ -67,7 +67,7 @@ const notStartedCount = students.filter((s: any) => s.trainingStatus === 'Não I
     }, {});
 
     // Training phase distribution
-    const phaseDistribution = students.reduce((acc: any, student) => {
+    const phaseDistribution = students.reduce((acc: any, student: any) => {
       const phaseName = student?.trainingPhase?.name || 'Sem Fase';
       acc[phaseName] = (acc[phaseName] || 0) + 1;
       return acc;
